@@ -1,9 +1,9 @@
 import React from 'react'
-import { useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate,Link } from 'react-router-dom'
 import axios from 'axios'
 const Employee = () => {
-  const [employee,setEmployee] = useState([])
+  const [employee, setEmployee] = useState([])
   useEffect(() => {
     axios.get('http://localhost:3000/auth/get_employees')
       .then(result => {
@@ -15,6 +15,18 @@ const Employee = () => {
       }).catch(err =>
         console.log(err))
   }, [])
+
+  const Navigate = useNavigate()
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:3000/auth/delete_employee/${id}`)
+      .then (result => {
+        if (result.data.status) {
+          window.location.reload()
+      } else {
+        alert(result.data.Error)
+      }
+    })
+  }
   return (
     <div className='px-5 mt-3'>
       <div className='d-flex justify-content-center'>
@@ -39,7 +51,7 @@ const Employee = () => {
           </thead>
           <tbody>
             {
-              employee.map(e => (
+              employee.map((e) => (
                 <tr>
                   <td>{e.id}</td>
                   <td>{e.name}</td>
@@ -48,8 +60,8 @@ const Employee = () => {
                   <td>{e.address}</td>
                   <td>{e.salary}</td>
                   <td>
-                    <Link to={'dashboard/Edit_employee/'+ e.id} className='btn btn-primary m-2'>Edit</Link>
-                    <Link className='btn btn-danger '>Delete</Link>
+                    <Link to={'/dashboard/Edit_employee/' + e.id} className='btn btn-primary m-2'>Edit</Link>
+                    <Link className='btn btn-danger ' onClick={() => handleDelete(e.id)}>Delete</Link>
                   </td>
 
                 </tr>
