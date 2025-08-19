@@ -54,6 +54,14 @@ const storage = mulder.diskStorage({
 })
 const upload = mulder({ storage: storage })
 
+router.get('/get_employees', (req, res) => {
+    const sql = "SELECT * FROM employee";
+    con.query(sql, (err, result) => {
+      if (err) return res.json({ status: false, Error: "Query error" });
+      return res.json({ status: true, Result: result });
+    });
+  });
+
 router.post("/Addemployee", upload.single('image'), (req, res) => {
   const sql = "INSERT INTO employee (name, email, password, address, salary, image, category_id) VALUES (?)";
   bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -74,14 +82,6 @@ router.post("/Addemployee", upload.single('image'), (req, res) => {
         return res.json({ status: false, Error: "Query error" })
       }
       return res.json({ status: true, message: "Employee added successfully" });
-    });
-  });
-
-  router.get('/get_employees', (req, res) => {
-    const sql = "SELECT * FROM employee";
-    con.query(sql, (err, result) => {
-      if (err) return res.json({ status: false, Error: "Query error" });
-      return res.json({ status: true, Result: result });
     });
   });
 

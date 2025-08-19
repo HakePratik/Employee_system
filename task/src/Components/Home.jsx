@@ -59,7 +59,7 @@ const salarycount = () => {
           </div>
         </div>
         <div className='px-3 pt-3 pb-2 border border-2 rounded shadow-sm w-25'>
-          <div className='tex pb-1'>
+          <div className='text-center pb-1'>
             <h3>Employee</h3>
           </div>
           <hr/>
@@ -80,7 +80,7 @@ const salarycount = () => {
         </div>
       </div>
       <div>
-        <h2>LIst of Admins</h2>
+        <h2>List of Admins</h2>
         <table className='table table-striped'>
           <thead>
             <tr>
